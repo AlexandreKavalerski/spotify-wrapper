@@ -1,5 +1,13 @@
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import { search, searchAlbums, searchArtists, searchTracks, searchPlaylists } from '../src/main'
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import sinonStubPromise from 'sinon-stub-promise';
+chai.use(sinonChai);
+sinonStubPromise(sinon);
+
+global.fetch = require('node-fetch');
+
 describe('Spotify Wrapper', () => {
     describe('smoke tests', () => {
         it('should exist the search method', () => {
@@ -16,6 +24,36 @@ describe('Spotify Wrapper', () => {
         });
         it('should exist the searchPlaylists method', () => {
             expect(searchPlaylists).to.exist;
+        });
+    });
+
+    describe('Generic Search', () => {
+        let fetchedStub;
+        beforeEach(() => {
+            fetchedStub = sinon.stub(global, 'fetch');
+        });
+        afterEach(() => {
+            fetchedStub.restore();
+        });
+
+        it('should call fetch function', () => {
+            const artists = search();
+            expect(fetchedStub).to.have.been.calledOnce;
+        });
+
+        it('should receive the correct url to fetch', () => {
+            context('passing one type', () => {
+                const artists = search('Muse', 'artist');
+                expect(fetchedStub).to.have.been.calledWith('api.spotify.com/v1/search?q=Muse&type=artist');
+                const albums = search('Muse', 'album')
+                expect(fetchedStub).to.have.been.calledWith('api.spotify.com/v1/search?q=Muse&type=album');
+            });
+            
+            context('passing more than one type', () => {
+                const artistsAndAlbums = search('Muse', ['artist', 'album']);
+
+                expect(fetchedStub).to.have.been.calledWith('api.spotify.com/v1/search?q=Muse&type=artist,album')
+            });
         });
     });
 });
