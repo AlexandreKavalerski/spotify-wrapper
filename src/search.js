@@ -1,5 +1,5 @@
-import { API_URL } from './config';
-import { toJSON } from './utils';
+import API_URL from './config';
+import toJSON from './utils';
 /* global fetch */
 
 export const search = (query, type) =>
