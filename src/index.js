@@ -12,6 +12,11 @@ import {
   getAlbumTracks,
 } from './albums';
 
+import {
+  getArtist,
+  getTopTracksFromArtist,
+} from './artists';
+
 module.exports = {
   search,
   searchAlbums,
@@ -21,4 +26,6 @@ module.exports = {
   getAlbum,
   getAlbums,
   getAlbumTracks,
+  getArtist,
+  getTopTracksFromArtist,
 };
