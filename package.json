@@ -4,6 +4,10 @@
   "description": "A wrapper to work with Spotify Web API",
   "main": "src/index.js",
   "scripts": {
+    "clear": "rimraf lib",
+    "create:lib": "./node_modules/.bin/babel --out-dir lib src",
+    "build": "npm run clear && npm run create:lib",
+    "build:watch": "npm run clear && npm run create:lib -- --watch",
     "lint": "node_modules/.bin/eslint src/*.js",
     "prepush": "npm run lint && npm test",
     "test": "node_modules/.bin/mocha tests/**/*.spec.js --require babel-register",
@@ -39,6 +43,7 @@
     "mocha": "^4.0.1",
     "node-fetch": "^1.7.3",
     "nyc": "^11.3.0",
+    "rimraf": "^2.6.2",
     "sinon": "^4.1.3",
     "sinon-chai": "^2.14.0",
     "sinon-stub-promise": "^4.0.0"
