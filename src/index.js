@@ -7,11 +7,7 @@ import {
 } from './search';
 
 import album from './album';
-
-import {
-  getArtist,
-  getTopTracksFromArtist,
-} from './artists';
+import artist from './artist';
 
 import { API_URL } from './config';
 
@@ -23,6 +19,7 @@ export default class SpotifyWrapper {
     this.token = options.token;
 
     this.album = album.bind(this)();
+    this.artist = artist.bind(this)();
   }
 
   request(url) {
