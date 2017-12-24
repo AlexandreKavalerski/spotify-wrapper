@@ -6,11 +6,7 @@ import {
   searchTracks,
 } from './search';
 
-import {
-  getAlbum,
-  getAlbums,
-  getAlbumTracks,
-} from './albums';
+import album from './album';
 
 import {
   getArtist,
@@ -25,6 +21,8 @@ export default class SpotifyWrapper {
   constructor(options) {
     this.apiURL = options.apiURL || API_URL;
     this.token = options.token;
+
+    this.album = album.bind(this)();
   }
 
   request(url) {
